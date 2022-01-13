@@ -14,16 +14,15 @@ for i in range(M):
 
 sx, sy = map(int,input().split())
 shark = [sx-1,sy-1]
+alivefish = 0
 
 fdir = [[0,-1],[-1,-1],[-1,0],[-1,1],[0,1],[1,1],[1,0],[1,-1]]
 sdir = [[0,1],[1,0],[0,-1],[-1,0]]
 
 def copymove():
     n = len(fish)
-    for i in range(n):
+    for ii in range(n):
         x,y,d = fish.popleft()
-        if board[x][y] == 0:
-            continue
         copyfish.append((x,y,d))
 
         for i in range(9):
@@ -91,6 +90,13 @@ def smelldown():
 
 
 def fishcopy():
+    nn = len(fish)
+    for i in range(nn):
+        x,y,d = fish.popleft()
+        if board[x][y] != 0:
+            fish.append((x,y,d))
+
+
     n = len(copyfish)
     for i in range(n):
         x,y,d = copyfish.popleft()
@@ -108,8 +114,3 @@ ans = 0
 for i in board:
     ans += sum(i)
 print(ans)
-
-
-
-
-
