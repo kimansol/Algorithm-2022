@@ -94,22 +94,9 @@ def fishcopy():
 
 for _ in range(S):
     copymove()
-    print('물고기 이동후')
-    for i in board:
-        print(i)
     sharkmove()
-    print('상어 이동후')
-    for i in board:
-        print(i)
     smelldown()
-    print(fish)
     fishcopy()
-    print('복사후')
-    for i in board:
-        print(i)
-    print('스멜')
-    for i in smell:
-        print(i)
 
 ans = 0
 for i in board:
