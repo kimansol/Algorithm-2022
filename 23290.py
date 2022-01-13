@@ -25,32 +25,38 @@ def copymove():
         if board[x][y] == 0:
             continue
         copyfish.append((x,y,d))
-        cnt = 9
-        while cnt:
-            nx,ny = x + fdir[d][0], y + fdir[d][1]
-            if nx<0 or ny<0 or nx>3 or ny>3 or smell[nx][ny] != 0 or (nx == shark[0] and ny == shark[1]):
-                d = d - 1 if d >= 1 else 7
-            elif cnt == 0:
-                nx,ny,d = x,y,d
-            else:
-                break
-            cnt -= 1
+
+        for i in range(9):
+            nd = d - i
+            if nd < 0:
+                nd = 8 + nd
+            nx,ny = x + fdir[nd][0], y + fdir[nd][1]
+            if i == 8:
+                nx,ny,nd = x,y,d
+            if nx< 0 or ny <0 or nx > 3 or ny > 3:
+                continue
+            if smell[nx][ny] !=0:
+                continue
+            if nx == shark[0] and ny == shark[1]:
+                continue
+            break
+
         board[x][y] -= 1
         board[nx][ny] += 1
-        fish.append((nx,ny,d))
+        fish.append((nx,ny,nd))
 
-def simul(b,x,y):
+def simul(movelist,x,y):
     cnt = 0
     cx, cy = x, y
     copymap = [[0,0,0,0] for _ in range(4)]
     for ii in range(4):
         for jj in range(4):
             copymap[ii][jj] = board[ii][jj]
-    for j in b:
+    for j in movelist:
         nx = cx + sdir[j][0]
         ny = cy + sdir[j][1]
         if nx < 0 or ny < 0 or nx > 3 or ny > 3:
-            continue
+            return -1
         if copymap[nx][ny] != 0:
             cnt += copymap[nx][ny]
             copymap[nx][ny] = 0
