@@ -1,3 +1,6 @@
+## 백준 23290/마법사 상어와 복제(삼성 기출)/ 구현,시뮬레이션
+## 2022.01.13
+
 from collections import deque
 from itertools import product
 
@@ -19,7 +22,7 @@ alivefish = 0
 fdir = [[0,-1],[-1,-1],[-1,0],[-1,1],[0,1],[1,1],[1,0],[1,-1]]
 sdir = [[0,1],[1,0],[0,-1],[-1,0]]
 
-def copymove():
+def copymove(): ## 살아있는 상어를 copyfish queue에 복사후 이동
     n = len(fish)
     for ii in range(n):
         x,y,d = fish.popleft()
@@ -44,7 +47,7 @@ def copymove():
         board[nx][ny] += 1
         fish.append((nx,ny,nd))
 
-def simul(movelist,x,y):
+def simul(movelist,x,y): ##샤크의 모든 이동경로를 이동후 먹은 물고기수 계산
     cnt = 0
     cx, cy = x, y
     copymap = [[0,0,0,0] for _ in range(4)]
@@ -62,7 +65,7 @@ def simul(movelist,x,y):
         cx, cy = nx, ny
     return cnt
 
-def sharkmove():
+def sharkmove(): ##상어의 이동경로중 가장 많은 물고기를 먹을수 있는 경로 선택 후 이동
     movelist = list(product([0,1,2,3],repeat = 3))
     eatmax = 0
     eatlist = (3,3,3)
@@ -88,8 +91,7 @@ def smelldown():
             if smell[i][j] != 0:
                 smell[i][j] -= 1
 
-
-def fishcopy():
+def fishcopy(): ## 살아있는 물고기와 복사된 물고기를 정리하여 fish큐에 추가
     nn = len(fish)
     for i in range(nn):
         x,y,d = fish.popleft()
