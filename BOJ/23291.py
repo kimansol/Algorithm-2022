@@ -91,16 +91,24 @@ def fold():
     halfboard = [[0] * N for _ in range(4)]
     for i in range(N):
         halfboard[0][i] = fishbowl[i]
+    for i in halfboard:
+        print(i)
+    print('------------------------')
     for i in range(N//2):
         halfboard[1][-1-i] = halfboard[0][i]
         halfboard[0][i] = 0
+    for i in halfboard:
+        print(i)
+    print('------------------------')
     for i in range(0,2):
         for j in range(N//2,N//2 + N//4):
             halfboard[-1-i][N//2-1-j] = halfboard[i][j]
             halfboard[i][j] = 0
-    # print("-----------just fold--------")
-    # for i in halfboard:
-    #     print(i)
+    for i in halfboard:
+        print(i)
+    print('------------------------')
+
+
 
 
     tmp = [0] * N
