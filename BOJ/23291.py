@@ -1,121 +1,174 @@
-##백준23289 / 온풍기 안녕(삼성 기출) / 구현,시뮬레이션
-## 2022.01.15
+#https://www.acmicpc.net/problem/23291
+# 백준 23291/ 어항 정리
+# 2022.01.18
+## index 에러
 
-from collections import deque
-
-R, C, K = map(int,input().split(' '))
-board = [list(map(int,input().split(' '))) for _ in range(R)]
-W = int(input())
-walllist = [list(map(int,input().split(' '))) for _ in range(W)]
-ans = 0
-heater = []
-sample = []
-wall = []
-dir = [[0,-1] , [-1,0] , [0,1] , [1,0]] #좌상우하
-
-for i in range(R):
-    for j in range(C):
-        if board[i][j] == 5:
-            board[i][j] = 0
-            sample.append([i,j])
-        if board[i][j] in [1,2,3,4]:
-            dd = 0
-            if board[i][j] == 1:
-                dd = 2
-            elif board[i][j] == 2:
-                dd = 0
-            elif board[i][j] == 3:
-                dd = 1
-            else:
-                dd = 3
-            heater.append([i,j,dd])
-            board[i][j] = 0
-
-for ww in walllist:
-    if ww[2] == 0:
-        wall.append([ww[0]-1,ww[1]-1,1])
-        wall.append([ww[0]-2,ww[1]-1,3])
-    if ww[2] == 1:
-        wall.append([ww[0]-1,ww[1]-1,2])
-        wall.append([ww[0]-1,ww[1],0])
-
-
-def heat():
-    hque = deque()
-    for x,y,d in heater:
-        hque.append((x + dir[d][0] , y + dir[d][1] , d , 5))
-        flag = [[0 for _ in range(C)] for _ in range(R)]
-        while hque:
-            x,y,d,p = hque.popleft()
-            board[x][y] += p
-            if p > 1:
-                if [x,y,d-1] not in wall and [x + dir[d-1][0],y + dir[d-1][1],d] not in wall:
-                    nx, ny = x + dir[d-1][0] + dir[d][0], y + dir[d-1][1] + dir[d][1]
-                    if nx >= 0 and ny >= 0 and nx < R and ny < C and flag[nx][ny] == 0:
-                        hque.append((nx, ny , d, p-1))
-                        flag[nx][ny] = 1
-                if [x, y, d] not in wall:
-                    nx, ny = x + dir[d][0], y + dir[d][1]
-                    if nx >= 0 and ny >= 0 and nx < R and ny < C and flag[nx][ny] == 0:
-                        hque.append((nx, ny , d, p-1))
-                        flag[nx][ny] = 1
-
-                if [x, y, d + 1] not in wall and [x + dir[(d + 1)%4][0], y + dir[(d + 1)%4][1], d] not in wall:
-                    nx, ny = x + dir[(d + 1)%4][0] + dir[d][0], y + dir[(d + 1)%4][1] + dir[d][1]
-                    if nx >= 0 and ny >= 0 and nx < R and ny < C and flag[nx][ny] == 0:
-                        hque.append((nx, ny, d, p - 1))
-                        flag[nx][ny] = 1
-
-
-
-def spread():
-    updown = [[0 for _ in range(C)] for _ in range(R)]
-    for i in range(R):
-        for j in range(C):
-            for k in range(4):
-                nx,ny = i + dir[k][0], j + dir[k][1]
-                if [i, j, k] in wall:
-                    continue
-                if nx < 0 or ny < 0 or nx >= R or ny >= C:
-                    continue
-                if board[i][j] - board[nx][ny] >= 4:
-                    updown[i][j] -= (board[i][j] - board[nx][ny]) // 4
-                    updown[nx][ny] += (board[i][j] - board[nx][ny]) // 4
-
-
-    for i in range(R):
-        for j in range(C):
-            board[i][j] += updown[i][j]
-
-def sidedown():
-    for i in range(C):
-        if board[0][i] != 0:
-            board[0][i] -= 1
-        if board[R-1][i] != 0:
-            board[R-1][i] -= 1
-    for j in range(1,R-1):
-        if board[j][0] != 0:
-            board[j][0] -= 1
-        if board[j][C-1] != 0:
-            board[j][C-1] -= 1
-
-def check(): ##모든 sample위치의 온도가 K이상인지
+def makeBoard():
+    x = 5
+    y = 5
+    index = 0
+    d = 0 ## 현재방향
+    depth = 1 ## 가야할 방향
     cnt = 0
-    allpass = len(sample)
-    for x,y in sample:
-        if board[x][y] >= K:
-            cnt += 1
-    return 1 if cnt < allpass else 0
+    while x > -1 and y > -1:
+        if N - index < depth-cnt:
+            break
+        indexing[index] = [x,y]
+        board[x][y] = index
+        x += dir[d][0]
+        y += dir[d][1]
+        cnt += 1
+        index += 1
+        if cnt == depth:
+            if d in [1, 3]:
+                depth += 1
+            d = (d + 1) % 4
+            cnt = 0
+    return d
+
+def plusone():
+    mini = min(fishbowl)
+    for i in range(N):
+        if fishbowl[i] == mini:
+            fishbowl[i] += 1
+
+def stackup():
+    tmp = [0] * N
+    for i in range(len(indexing)):
+        x, y = indexing[i][0], indexing[i][1]
+        for d in range(4):
+            nx, ny = x + dir[d][0], y + dir[d][1]
+            if nx < 0 or ny < 0 or nx > 10 or ny > 10:
+                continue
+            if board[nx][ny] == -1:
+                continue
+            if board[nx][ny] > board[x][y]:
+                if fishbowl[board[nx][ny]] - fishbowl[board[x][y]] >= 5:
+                    tmp[board[nx][ny]] -= (fishbowl[board[nx][ny]] - fishbowl[board[x][y]]) // 5
+                    tmp[board[x][y]] += (fishbowl[board[nx][ny]] - fishbowl[board[x][y]]) // 5
+                elif fishbowl[board[x][y]] - fishbowl[board[nx][ny]] >= 5:
+                    tmp[board[nx][ny]] += (fishbowl[board[x][y]] - fishbowl[board[nx][ny]]) // 5
+                    tmp[board[x][y]] -= (fishbowl[board[x][y]] - fishbowl[board[nx][ny]]) // 5
+    for i in range(len(indexing) - 1, N - 1):
+        if fishbowl[i] - fishbowl[i + 1] >= 5:
+            tmp[i] -= (fishbowl[i] - fishbowl[i + 1]) // 5
+            tmp[i + 1] += (fishbowl[i] - fishbowl[i + 1]) // 5
+        elif fishbowl[i + 1] - fishbowl[i] >= 5:
+            tmp[i] += (fishbowl[i + 1] - fishbowl[i]) // 5
+            tmp[i + 1] -= (fishbowl[i + 1] - fishbowl[i]) // 5
+    # print(f"조절:{tmp}")
+    for i in range(N):
+        fishbowl[i] = fishbowl[i] + tmp[i]
+
+def unfold():
+    new_fish = []
+    if leftcount == 0:  ##진행방향 서쪽 , 남쪽이 왼쪽
+        for i in range(10, -1, -1):
+            for j in range(10, -1, -1):
+                if board[i][j] != -1:
+                    new_fish.append(fishbowl[board[i][j]])
+    if leftcount == 1: # 진행방향 남쪽 ,  동쪽이 왼쪽
+        for j in range(10, -1, -1):
+            for i in range(0, 10, 1):
+                if board[i][j] != -1:
+                    new_fish.append(fishbowl[board[i][j]])
+    if leftcount == 2: #동 북
+        for i in range(0, 10, 1):
+            for j in range(0, 10, 1):
+                if board[i][j] != -1:
+                    new_fish.append(fishbowl[board[i][j]])
+    if leftcount == 3: #북 서
+        for j in range(0, 10, 1):
+            for i in range(10, -1, -1):
+                if board[i][j] != -1:
+                    new_fish.append(fishbowl[board[i][j]])
+    for i in range(len(indexing), N):
+        new_fish.append((fishbowl[i]))
+    return new_fish
+
+def fold():
+    new_fish = []
+    halfboard = [[0] * N for _ in range(4)]
+    for i in range(N):
+        halfboard[0][i] = fishbowl[i]
+    for i in range(N//2):
+        halfboard[1][-1-i] = halfboard[0][i]
+        halfboard[0][i] = 0
+    for i in range(0,2):
+        for j in range(N//2,N//2 + N//4):
+            halfboard[-1-i][N//2-1-j] = halfboard[i][j]
+            halfboard[i][j] = 0
+    # print("-----------just fold--------")
+    # for i in halfboard:
+    #     print(i)
 
 
-flag = 1
-while flag:
-    heat()
-    spread()
-    sidedown()
+    tmp = [0] * N
+    idx = 0
+    ##좌우 물고기 양 비교
+    for j in range(N//2+N//4,N-1):
+        for i in range(4):
+            if halfboard[i][j] - halfboard[i][j+1] >= 5:
+                tmp[idx] -= (halfboard[i][j] - halfboard[i][j+1]) //5
+                tmp[idx + 4] += (halfboard[i][j] - halfboard[i][j+1]) //5
+            if halfboard[i][j+1] - halfboard[i][j] >= 5:
+                tmp[idx] += (halfboard[i][j+1] - halfboard[i][j]) //5
+                tmp[idx + 4] -= (halfboard[i][j+1] - halfboard[i][j]) //5
+            idx += 1
+    ##상하 물고기 비교
+    idx = 0
+    for j in range(N // 2 + N // 4, N):
+        for i in range(3):
+            if halfboard[i][j] - halfboard[i+1][j] >= 5:
+                tmp[idx] -= (halfboard[i][j] - halfboard[i+1][j]) // 5
+                tmp[idx + 1] += (halfboard[i][j] - halfboard[i+1][j]) // 5
+            if halfboard[i+1][j] - halfboard[i][j] >= 5:
+                tmp[idx] += (halfboard[i+1][j] - halfboard[i][j]) // 5
+                tmp[idx + 1] -= (halfboard[i+1][j] - halfboard[i][j]) // 5
+            idx += 1
+        idx += 1
+    # print(f"조절:{tmp}")
+
+    for j in range(N//2+N//4,N):
+        for i in range(4):
+            new_fish.append(halfboard[i][j])
+    for i in range(N):
+        new_fish[i] = new_fish[i] + tmp[i]
+    return new_fish
+
+def check():
+    flag = max(fishbowl) - min(fishbowl) <= K
+    return flag
+
+N, K = map(int, input().split())
+fishbowl = list(map(int, input().split()))
+board = [[-1] * 11 for _ in range(11)]
+indexing = {}
+dir = [[0,-1],[1,0],[0,1],[-1,0]] #서,남,동,북
+
+
+
+leftcount = makeBoard()
+# for i in board:
+#     print(i)
+
+ans = 0
+while not check():
+    # print(f"원본:{fishbowl}")
+    plusone()
+    # print(f"플일:{fishbowl}")
+    stackup()
+    # print(f"말조:{fishbowl}")
+    fishbowl = unfold()
+    # print(f"풀고:{fishbowl}")
+    fishbowl = fold()
+    # print(f"반접:{fishbowl}")
+    # print(check())
     ans += 1
-    flag = check()
-    if ans > 100:
-        flag = 0
-
 print(ans)
+
+
+
+
+
+
