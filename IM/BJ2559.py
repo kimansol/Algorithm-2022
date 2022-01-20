@@ -1,3 +1,8 @@
+##백준 2259/수열
+# https://www.acmicpc.net/problem/2559
+# 2022.01.20
+
+
 n, k = map(int, input().split())
 temps = list(map(int, input().split()))
 
@@ -8,14 +13,15 @@ temps = list(map(int, input().split()))
 #     for j in range(i,i+k):
 #         cnt += temps[j]
 #     ans = max(ans,cnt)
-ret = 0
 ans = 0
 for i in range(k):
     ans += temps[i]
+ret = ans
 
-for i in range(1,n-k):
-    cnt = ans
-    print(cnt)
-    ret = max(ans,cnt)
+for i in range(1,n-k+1): # 1 2 3 4 5
+    ans -= temps[i-1]
+    ans += temps[k+i-1] # 5 6 7 8 9
+    ret = max(ans,ret)
 
 print(ret)
+

@@ -7,6 +7,8 @@ def movesend(x,y,d):
     movedsend = 0
     board[cx][cy] = 0
 
+    [[0, -1], [1, 0], [0, 1], [-1, 0]]  # 서,남,동,북
+
     #두칸앞
     nx, ny = cx + 2 * dir[d][0], cy + 2 * dir[d][1]
     if nx < 0 or ny < 0 or nx >= N or ny >= N:
@@ -68,7 +70,7 @@ def move():
     y = N//2
     index = 0
     d = 0 ## 현재방향
-    depth = 1 ## 가야할 방향
+    depth = 1 ## 가야할 길이
     cnt = 0
     while x > -1 and y > -1:
         movesend(x,y,d)
