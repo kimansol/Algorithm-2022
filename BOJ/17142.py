@@ -28,7 +28,9 @@ def bfs(flag):
         if cnt == blankcnt:
             time = 0
             for i in new_board:
+                # print(i)
                 time = max(max(i), time)
+            input()
             ans = min(time, ans)
             break
     else:
@@ -37,7 +39,7 @@ def bfs(flag):
 
 
 def seletVirus(idx, selectvirus):
-    if len(selectvirus) == m:
+    if len(selectvirus) == m: ## selctvirus = [0,1,2], [0,1,3] ... [5,6,7]
         bfs(selectvirus)
         return
 
@@ -64,7 +66,7 @@ blankcnt = n * n - wallcnt - viruscnt
 selectvirus = []
 
 
-ans = 2500
+ans = 2500 # 50*50 이라 적당히 큰수
 seletVirus(0, selectvirus)
 if blankcnt == 0:
     print(0)
