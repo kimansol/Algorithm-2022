@@ -28,5 +28,4 @@ for i in range(100):
         if board[i][j] == 1 and board[i][j+1] == 1 and board[i+1][j] == 1 and board[i+1][j+1] == 1:
             ans += 1
 
-
 print(ans)
