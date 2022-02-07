@@ -1,8 +1,6 @@
 # https://www.acmicpc.net/problem/14890
 # 백준14890/경사로/ 골드3
 # 2022.02.03
-
-
 n, l = map(int, input().split())
 board = [list(map(int, input().split())) for _ in range(n)]
 
