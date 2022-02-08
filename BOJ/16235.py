@@ -13,7 +13,7 @@ def ss():
                     live_tree[i][j][k] += 1
                 else:
                     for _ in range(k, len(live_tree[i][j])):
-                        board[i][j] += live_tree[i][j].pop() // 2
+                        board[i][j] += live_tree[i][j].pop()//2
                     break
 
 def fw():
@@ -28,14 +28,11 @@ def fw():
                             live_tree[nx][ny].appendleft(1)
             board[x][y] += plus_board[x][y]
 
-
 dir = [[-1, -1], [-1, 0], [-1, 1], [1, -1], [1, 1], [1, 0], [0, -1], [0, 1]]
 n, m, k = map(int, input().split())
-plus_board = []
+plus_board = [list(map(int, input().split())) for i in range(n)]
 live_tree = [[deque() for i in range(n)] for i in range(n)]
 board = [[5] * n for i in range(n)]
-for i in range(n):
-    plus_board.append(list(map(int, input().split())))
 for i in range(m):
     x, y, z = map(int, input().split())
     live_tree[x - 1][y - 1].append(z)
