@@ -77,9 +77,23 @@ ans = 0
 while 1:
     if not check():
         break
+    # print('-------큰거제거-------')
+    # for i in board:
+    #     print(i)
     down()
+    # print('-------다운-------')
+    # for i in board:
+    #     print(i)
     board = list(map(list, zip(*board)))[::-1]
+    # print('-------회전-------')
+    # for i in board:
+    #     print(i)
     down()
+    # print('-------다운-------')
+    # for i in board:
+    #     print(i)
+    # print('--------한싸이클끝---------')
+
 
 print(ans)
 
