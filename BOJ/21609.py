@@ -12,7 +12,7 @@ def check():
             if visit[i][j] == 0 and board[i][j] > 0:
                 q.append((i,j))
                 visit[i][j] = -1
-                tmp = [1,0,board[i][j],i,j] # 크기,0갯수,숫자,x,y
+                tmp = [1,0,board[i][j],i,j]  #[크기,0갯수,숫자,x,y]
                 while q:
                     x,y = q.popleft()
                     for dx, dy in [[0,1],[0,-1],[1,0],[-1,0]]:
@@ -43,6 +43,7 @@ def check():
         global ans
         ans += compare[0] * compare[0]
 
+    # 제거 BFS
     q.append((compare[3], compare[4]))
     board[compare[3]][compare[4]] = -2
     while q:
@@ -84,7 +85,8 @@ while 1:
     # print('-------다운-------')
     # for i in board:
     #     print(i)
-    board = list(map(list, zip(*board)))[::-1]
+    board = list(map(list, zip(*board)))[::-1] #반시계90
+    # list(map(list, zip(*board[::-1]))) 시계 90
     # print('-------회전-------')
     # for i in board:
     #     print(i)

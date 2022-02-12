@@ -40,6 +40,10 @@ for i in range(m):
 for i in range(k):
     ss()
     fw()
+    for i in board:
+        print(i)
+    for i in live_tree:
+        print(i)
 
 cnt = 0
 for i in range(n):

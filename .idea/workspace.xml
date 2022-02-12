@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c24aeae5-66a6-40bd-a616-7e51f9f092d8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/BOJ/21609.py" beforeDir="false" afterPath="$PROJECT_DIR$/BOJ/21609.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BOJ/23289.py" beforeDir="false" afterPath="$PROJECT_DIR$/BOJ/23289.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IM/A/B.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IM/A/Downloads/input (2).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IM/A/Downloads/output (2).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IM/A/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/BOJ/20061.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IM/A/output.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IM/SWEA1206_D3.py" beforeDir="false" afterPath="$PROJECT_DIR$/IM/SWEA1206_D3.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="24vAZFHkC0I1WtP2VcB4HWDLmqn" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c24aeae5-66a6-40bd-a616-7e51f9f092d8" name="Default Changelist" comment="" />
+      <created>1644500740276</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1644500740276</updated>
+    </task>
+    <servers />
+  </component>
+</project>
