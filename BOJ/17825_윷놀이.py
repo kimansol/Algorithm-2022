@@ -7,41 +7,41 @@ sys.setrecursionlimit(4**10)
 dice = list(map(int, input().split()))
 board = [[40,35,30,25],[40,35,30,25,19,16,13],[40,35,30,25,24,22],[40,35,30,25,26,27,28]]
 
-def back(n,pos1,pos2,pos3,pos4, cnt):
+def back(n,pos, cnt):
     if n == 9:
         global ans
         ans = max(ans, cnt)
         return
 
-    if pos1 == 21:
-        pos1 = 31
-    elif pos2 == 21:
-        pos2 = 32
-    elif pos3 == 21:
-        pos3 = 33
-    elif pos4 == 21:
-        pos4 = 34
+    if pos[0] == 21:
+        pos[0] = 31
+    elif pos[1] == 21:
+        pos[1] = 32
+    elif pos[2] == 21:
+        pos[2] = 33
+    elif pos[3] == 21:
+        pos[3] = 34
 
-    next_pos, point = move(pos1, dice[n + 1])
-    if next_pos not in [pos4, pos2, pos3] and pos1<20:
-        back(n + 1, next_pos, pos2, pos3, pos4, cnt + point)
+    next_pos, point = move(pos[0], dice[n + 1])
+    if next_pos not in [pos[3], pos[1], pos[2]] and pos[0]<20:
+        back(n + 1, [next_pos, pos[1], pos[2], pos[3]], cnt + point)
 
-    next_pos, point = move(pos2, dice[n + 1])
-    if next_pos not in [pos4, pos1, pos3] and pos2<20:
-        back(n + 1, pos1, next_pos, pos3, pos4, cnt + point)
+    next_pos, point = move(pos[1], dice[n + 1])
+    if next_pos not in [pos[3], pos[0], pos[2]] and pos[1]<20:
+        back(n + 1, [pos[0], next_pos, pos[2], pos[3]], cnt + point)
 
-    next_pos, point = move(pos3, dice[n + 1])
-    if next_pos not in [pos1, pos2, pos4] and pos3<20:
-        back(n + 1, pos1, pos2, next_pos, pos4, cnt + point)
+    next_pos, point = move(pos[2], dice[n + 1])
+    if next_pos not in [pos[0], pos[1], pos[3]] and pos[2]<20:
+        back(n + 1,[ pos[0], pos[1], next_pos, pos[3]], cnt + point)
 
-    next_pos, point = move(pos4, dice[n + 1])
-    if next_pos not in [pos1, pos2, pos3] and pos4<20:
-        back(n + 1, pos1, pos2, pos3, next_pos, cnt + point)
+    next_pos, point = move(pos[3], dice[n + 1])
+    if next_pos not in [pos[0], pos[1], pos[2]] and pos[3]<20:
+        back(n + 1, [pos[0], pos[1], pos[2], next_pos], cnt + point)
     return
 
 
 def move(cur_pos, n):
-    if cur_pos in [5, 10, 15]:
+    if cur_pos in [5, 10, 15]: #모서리
         if cur_pos == 5:
             next_pos = -16+n-1
         elif cur_pos == 10:
@@ -53,7 +53,7 @@ def move(cur_pos, n):
         point = board[(-next_pos // 10)][-next_pos%10]
         return next_pos,point
 
-    elif cur_pos < 0:
+    elif cur_pos < 0: # 중앙
         if -cur_pos%10 - n >= 1:
             next_pos = cur_pos + n
             if -next_pos % 10 <= 3:
@@ -71,5 +71,5 @@ def move(cur_pos, n):
     return next_pos if next_pos <= 20 else 21 , point if next_pos <= 20 else 0
 
 ans = 0
-back(-1,0,0,0,0,0)
+back(-1,[0,0,0,0],0)
 print(ans)

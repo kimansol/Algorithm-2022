@@ -32,13 +32,15 @@ def move():
             s = s % (2*(r-1))
         if d > 1:  #가로 이동
             s = s % (2*(c-1))
-        for i in range(s):
+
+        for i in range(s): ##속도만큼 이동
             nx,ny = x+ dir[d][0], y + dir[d][1]
             if nx < 0 or ny < 0 or nx >= r or ny >= c:
                 d = d+1 if d % 2 ==0 else d-1
                 nx, ny = x + dir[d][0], y + dir[d][1]
             x,y = nx, ny
         q. append([x,y,s,d,z])
+
     for _ in range(len(q)): #이동한 위치 맵핑
         x, y, s, d, z = q.popleft()
         if board[x][y] < z:
