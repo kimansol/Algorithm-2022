@@ -49,12 +49,14 @@ def get_possible_positions(arr, now_x, now_y):
 
 
 def dfs(array, now_x, now_y, total):
+
     global result
     array = deepcopy(array)
     # 물고기 번호 더하기
     total += array[now_x][now_y][0]
     # 물고기 먹음 처리
     array[now_x][now_y][0] = 0
+
     # 물고기 이동
     move_all_fish(array, now_x, now_y)
     # 이동가능한 영역 찾기
@@ -63,6 +65,8 @@ def dfs(array, now_x, now_y, total):
     # 이동가능한 영역이 없다면 결과값을 비교하여 바꿈
     if len(smlist) == 0:
         result = max(result, total)
+
+
         return
 
     # 이동 가능하다면 다음 좌표들에 대해 탐색 시행
