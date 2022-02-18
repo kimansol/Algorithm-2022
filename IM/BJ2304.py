@@ -5,38 +5,36 @@
 n = int(input())
 barList = [list(map(int,input().split(' '))) for _ in range(n)]
 barList.sort()
-max = max(barList[i][1] for i in range(n))
+max_val = 0
+max_idx = []
+for i in range(n):
+    if barList[i][1] > max_val:
+        max_val = barList[i][1]
+        max_idx = [i]
+    elif barList[i][1] == max_val:
+        max_idx.append(i)
 
-for i in range(n-1):
-    if barList[i][1] == max:
-        for j in range(i,n-1):
-            if barList[j][1] == max:
-                for k in range(i,j+1):
-                    barList[k][1] = max
-        break
-    if barList[i][1] >= barList[i+1][1]:
-        barList[i+1][1] = barList[i][1]
-for i in range(-1,-n,-1):
-    if barList[i][1] == max:
-        for j in range(i, -n,-1):
-            if barList[j][1] == max:
-                for k in range(i, j + 1):
-                    barList[k][1] = max
-        break
-    if barList[i][1] >= barList[i-1][1]:
-        barList[i-1][1] = barList[i][1]
+# print(barList)
+# print(max_val,max_idx)
+for i in range(max_idx[0],max_idx[-1]):
+    barList[i][1] = max_val
 
-ans = 0
-for i in range(n-1):
+for i in range(1,max_idx[0]):
+    if barList[i][1] < barList[i-1][1]:
+        barList[i][1] = barList[i-1][1]
+
+for i in range(n-2,max_idx[-1],-1):
     if barList[i][1] < barList[i+1][1]:
-        ans += (barList[i+1][0] - barList[i][0]) * barList[i][1]
-    if barList[i][1] == barList[i+1][1]:
-        ans += (barList[i+1][0] - barList[i][0]) * barList[i][1]
-    if barList[i][1] > barList[i+1][1]:
-        ans += barList[i][1]
-        ans += (barList[i+1][0] - barList[i][0] -1) * barList[i+1][1]
-ans += barList[-1][1]
+        barList[i][1] = barList[i+1][1]
+# print(barList)
 
+ans = (barList[max_idx[-1]][0]-barList[max_idx[0]][0]+1) * max_val
+# print(ans)
+for i in range(max_idx[0]):
+    ans += (barList[i+1][0] - barList[i][0]) * barList[i][1]
+# print(ans)
+for i in range(n-1,max_idx[-1],-1):
+    ans += (barList[i][0] - barList[i-1][0]) * barList[i][1]
 print(ans)
 
 

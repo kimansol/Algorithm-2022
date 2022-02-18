@@ -7,26 +7,51 @@ from collections import deque
 n, k = map(int,input().split())
 belt = list(map(int, input().split()))
 q = deque()
+belt = deque(belt)
 
 def rota():
-    tmp = belt[-1]
-    for i in range(1,len(belt)):
-        belt[i] = belt[i-1]
-    belt[0] = tmp
+    belt.appendleft(belt.pop())
+    for _ in range(len(q)):
+        r_pos = q.popleft()
+        r_pos += 1
+        if r_pos < n-1:
+            q.append(r_pos)
 
 def move():
-    for i in range(len(q)):
-        n = q.popleft()
-        n = n + 1
-        if n == 2*n-1:
-            continue
-        nn = 0 if n >11 else n+1
+    for _ in range(len(q)):
+        r_pos = q.popleft()
+        nr_pos = r_pos+1
+        if belt[nr_pos] > 0:
+            if nr_pos == n-1:
+                belt[nr_pos]-=1
+            elif nr_pos in q:
+                q.append(r_pos)
+            elif nr_pos < n-1:
+                q.append(nr_pos)
+                belt[nr_pos] -= 1
+        else:
+            q.append(r_pos)
+
 
 def up():
     if belt[0] != 0:
         q.append(0)
+        belt[0] -= 1
 
+ans = 0
 while belt.count(0) < k:
+    ans += 1
     rota()
+    # print('---회전후----')
+    # print(q)
+    # print(belt)
     move()
+    # print('---로봇이동후----')
+    # print(q)
+    # print(belt)
     up()
+    # print('---새로봇추가후----')
+    # print(q)
+    # print(belt)
+
+print(ans)
