@@ -25,7 +25,6 @@ def move(board):
                 idx += 1
     return board
 
-
 def play(board, cnt):
     if cnt == 5:
         global ans

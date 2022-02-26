@@ -13,25 +13,25 @@ def solution(board, skill):
         tmp_board[r2+1][c1] -= d if t == 2 else -d
         tmp_board[r2+1][c2+1] += d if t == 2 else -d
 
-    for i in tmp_board:
-        print(i)
-    print('---------------')
+    # for i in tmp_board:
+    #     print(i)
+    # print('---------------')
 
     for i in range(len(tmp_board)-1):
         for j in range(len(tmp_board[0])-1):
             if tmp_board[i][j] != 0:
                 tmp_board[i][j+1] += tmp_board[i][j]
-    for i in tmp_board:
-        print(i)
-    print('---------------')
+    # for i in tmp_board:
+    #     print(i)
+    # print('---------------')
 
     for j in range(len(tmp_board[0])-1):
         for i in range(len(tmp_board)-1):
             if tmp_board[i][j] != 0:
                 tmp_board[i+1][j] += tmp_board[i][j]
-    for i in tmp_board:
-        print(i)
-    print('---------------')
+    # for i in tmp_board:
+    #     print(i)
+    # print('---------------')
 
     for i in range(len(board)):
         for j in range(len(board[0])):
