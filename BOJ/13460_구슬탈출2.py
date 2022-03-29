@@ -33,7 +33,7 @@ def move(board,r,c):
                         break
     return board, 0
 
-def dfs(cnt, board, end_flag, r, c): ##이동 횟수, 현재보드, end_flag 0: 아직 모름 1:성공 2:실패
+def dfs(cnt, board, end_flag, r, c): ##이동 횟수, 현재보드, end_flag 0:아직 모름 1:성공 2:실패
     global ans
     if end_flag == 1: #성공 했을 때
         ans = min(ans, cnt)
